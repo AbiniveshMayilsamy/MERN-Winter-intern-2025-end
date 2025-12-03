@@ -5,7 +5,7 @@
   gap: 20px;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  /*align-items: center;*/
   flex-wrap: wrap;
 }
 
@@ -16,4 +16,14 @@
   font-size: 25px;
   height: 80px;
   width: 80px;
+}
+
+.flexitem:nth-child(1) {
+  order: 1;
+  align-self: center;
+}
+
+.flexitem:nth-child(6) {
+  order: -1;
+  align-self: center;
 }
