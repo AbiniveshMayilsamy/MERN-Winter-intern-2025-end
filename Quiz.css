@@ -1,0 +1,11 @@
+.heading {
+  padding: 5px;
+  border-radius: 8px;
+  border-color: red;
+  color: white;
+  background-color: blueviolet;
+  text-align: center;
+}
+h1 {
+  border: 3px solid red;
+}

@@ -1,0 +1,19 @@
+.flexContainer {
+  border: 1px solid red;
+  display: flex;
+  height: 90vh;
+  gap: 20px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.flexitem {
+  background-color: blanchedalmond;
+  border: 2px solid gold;
+  color: blue;
+  font-size: 25px;
+  height: 80px;
+  width: 80px;
+}
