@@ -54,3 +54,6 @@ const books = [
 // 6. Find the most expensive book in the collection
 // 7. Get all books that have more than 300 pages and are priced below 500
 // 8. Create a new array with book names and their respective authors
+
+// 1. Get all books name with rating greater than 4.5
+const booksWithRatingGreaterThan4 = books.filter((book) => book.rating > 4.5);
