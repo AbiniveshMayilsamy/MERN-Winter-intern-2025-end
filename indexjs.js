@@ -88,6 +88,12 @@
 // let b = 20;
 // console.log(a + b);
 
-let c = [1, 2, 3];
-let d = [1, 2, 3];
-console.log(c[(0, 1, 2)] == d[(0, 1, 2)]);
+// let c = [1, 2, 3];
+// let d = [1, 2, 3];
+// console.log(c[(0, 1, 2)] == d[(0, 1, 2)]);
+
+let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+//forloop
+for (let i = 0; i < arr.length; i++) {
+  console.log(arr[i]);
+}
