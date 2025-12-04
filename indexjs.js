@@ -102,3 +102,8 @@ for (let i = 0; i < arr.length; i++) {
 arr.forEach((element, index) => {
   console.log(element, index);
 });
+
+//map
+arr.map((element, index) => {
+  console.log(element, index);
+});
