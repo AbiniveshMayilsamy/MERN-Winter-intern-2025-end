@@ -84,6 +84,10 @@
 // DivTwonumbers(20, 50);
 // DivTwonumbers(40, 50);
 
-let a = "10";
-let b = 20;
-console.log(a + b);
+// let a = "10";
+// let b = 20;
+// console.log(a + b);
+
+let c = [1, 2, 3];
+let d = [1, 2, 3];
+console.log(c == d);
