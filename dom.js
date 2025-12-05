@@ -7,7 +7,7 @@ let cl = document.getElementsByClassName("a");
 console.log(cl);
 
 //3. ID Selector
-let id = document.getElementById("name");
+let id = document.getElementById("b");
 console.log(id);
 
 //4.Query Selector
