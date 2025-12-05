@@ -6,25 +6,42 @@
     <meta name="author" content="Abinivesh" />
     <title>Taskjs</title>
     <style>
-      .border {
-        border: 2px solid red;
+      body {
+        height: 90vh;
+        background-color: aliceblue;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
       }
-
-      .color {
-        color: red;
-      }
-      .background {
+      form {
+        width: 300px;
+        height: 120px;
         background-color: yellow;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        padding: 30px;
+        flex-direction: column;
+        border-radius: 8px;
+      }
+      input {
       }
     </style>
     <script src="dom.js" defer></script>
   </head>
   <body>
-    <h1 class="border">Dom Html</h1>
+    <!-- <h1 class="border">Dom Html</h1>
     <p class="a">Learning Js</p>
     <div>
       <p id="b">Para Inside</p>
     </div>
-    <div class="final"><h1>Final heading</h1></div>
+    <div class="final"><h1>Final heading</h1></div> -->
+
+    <form>
+      <input type="text" class="a" placeholder="name" />
+      <input type="text" class="a" placeholder="Feedback" />
+      <input type="submit" value="Submit" />
+    </form>
   </body>
 </html>
