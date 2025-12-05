@@ -43,4 +43,6 @@ let head = document.querySelector("h1");
 console.log(head);
 
 head.classList.add("color");
-head.classList.add("background");
+head.classList.remove("background");
+head.classList.toggle("color");
+head.classList.toggle("border");
