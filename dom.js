@@ -38,18 +38,30 @@
 // let div1 = document.querySelector("div");
 // div1.innerHTML = "<h1> hello from inner Html</h1>";
 
-// add/ remove/ toggle class
-let head = document.querySelector("h1");
-console.log(head);
+// // add/ remove/ toggle class
+// let head = document.querySelector("h1");
+// console.log(head);
 
-head.classList.add("color");
-head.classList.remove("background");
-head.classList.toggle("color");
-head.classList.toggle("border");
+// head.classList.add("color");
+// head.classList.remove("background");
+// head.classList.toggle("color");
+// head.classList.toggle("border");
 
-// Styling
-let p = document.querySelector("p");
-p.style.color = "green";
-p.style.backgroundColor = "Skyblue";
-p.style.fontSize = "20px";
-p.style.fontFamily = "Arial";
+// // Styling
+// let p = document.querySelector("p");
+// p.style.color = "green";
+// p.style.backgroundColor = "Skyblue";
+// p.style.fontSize = "20px";
+// p.style.fontFamily = "Arial";
+
+// create Html Elements
+
+// 1.Parent element
+let ul = document.createElement("ul");
+// 2.chid element
+let li = document.createElement("li");
+//3.content
+li.textContent = "Item 1";
+//4.append child
+ul.appendChild(li);
+document.body.appendChild(ul);
