@@ -1,4 +1,4 @@
-import Son from "./Son";
+import Son from "./son";
 const Father = ({ msg }) => {
   return (
     <div className="f">
