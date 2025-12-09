@@ -1,8 +1,16 @@
-export const Counter = (props) => {
+import ButtonContainer from "./ButtonContainer";
+
+const Counter = ({ val, handleIncrement, handleDecrement }) => {
   return (
-    <div style={{ backgroundColor: "red" }}>
-      <h1>Component1</h1>
-      <h1>{props.age}</h1>
+    <div className="Counter">
+      <h1>Counter</h1>
+      <h1>{val}</h1>
+      <ButtonContainer
+        handleIncrement={handleIncrement}
+        handleDecrement={handleDecrement}
+      />
     </div>
   );
 };
+
+export default Counter;
