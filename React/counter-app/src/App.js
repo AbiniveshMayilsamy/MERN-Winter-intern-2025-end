@@ -15,6 +15,7 @@ function App() {
   // let val = 0;
   let [val, setVal] = useState(10);
   let [data, setData] = useState(null);
+  let [posts, setPosts] = useState(null);
   const handleIncrement = () => {
     // val = val + 1;
     setVal(val + 1);
@@ -52,6 +53,19 @@ function App() {
     };
     fetchApi();
   }, []);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+        const fetchData = await response.json();
+        setPosts(fetchData);
+      } catch (error) {
+        console.log("err:", error);
+      }
+    };
+    fetchPosts();
+  }, []);
   // sideEffects
   // call back function / array of dependencies{Propa/state}
   // usecases- empty array-> runs afte55r initial render
@@ -76,31 +90,9 @@ function App() {
         val={val}
         handleIncrement={handleIncrement}
         handleDecrement={handleDecrement}
+        data={data}
+        posts={posts}
       />
-      <div>
-        <h2>Users:</h2>
-        {data ? (
-          <ul>
-            {data.map(user => (
-              <li key={user.id}>{user.name}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
-      <div>
-        <h2>Users:</h2>
-        {data ? (
-          <ul>
-            {data.map(user => (
-              <li key={user.id}>{user.name}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
     </div>
   );
 }

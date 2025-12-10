@@ -1,7 +1,7 @@
 .App {
   background-color: rgb(11, 11, 11);
   text-align: center;
-  height: 120vh;
+  height: auto;
   color: aqua;
   font-size: 15px;
 }
@@ -66,7 +66,7 @@
 } */
 
 .Counter {
-  width: 35%;
+  width: 55%;
   border: 2px solid black;
   margin: 10px auto;
   padding: 15px;
@@ -95,4 +95,22 @@ Button {
 }
 .dec:hover {
   background-color: rgb(63, 0, 0);
+}
+
+table {
+  border: 2px solid white;
+  border-radius: 4px;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+th {
+  border: 2px solid white;
+  border-radius: 4px;
+}
+
+td {
+  border: 2px solid white;
+  border-radius: 4px;
 }

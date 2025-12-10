@@ -1,6 +1,7 @@
 import ButtonContainer from "./ButtonContainer";
+import "./App.css";
 
-const Counter = ({ val, handleIncrement, handleDecrement }) => {
+const Counter = ({ val, handleIncrement, handleDecrement, data, posts }) => {
   let v = null;
   if (val < 0) {
     v = <p>Negative Value</p>;
@@ -42,6 +43,47 @@ const Counter = ({ val, handleIncrement, handleDecrement }) => {
         handleIncrement={handleIncrement}
         handleDecrement={handleDecrement}
       />
+      <br />
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>contact</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data &&
+            data.map((item) => (
+              <tr key={item.id}>
+                <td>{item.name}</td>
+                <td>{item.email}</td>
+                <td>{item.phone}</td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+
+      <br />
+      <table>
+        <thead>
+          <tr>
+            <th>UserId</th>
+            <th>Title</th>
+            <th>Body</th>
+          </tr>
+        </thead>
+        <tbody>
+          {posts &&
+            posts.map((post) => (
+              <tr key={post.id}>
+                <td>{post.userId}</td>
+                <td>{post.title}</td>
+                <td>{post.body}</td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
     </div>
   );
 };
