@@ -30,6 +30,22 @@ const routerVariables = createBrowserRouter([
         path: "/search",
         element: <Search></Search>,
       },
+      {
+        path: "*",
+        element: (
+          <h1
+            style={{
+              color: "red",
+              alignItems: "center",
+              justifyContent: "center",
+              display: "flex",
+              height: "100vh",
+            }}
+          >
+            !-- 404 -- Page Not Found --!{" "}
+          </h1>
+        ),
+      },
     ],
   },
 ]);
@@ -37,7 +53,7 @@ const routerVariables = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={routerVariables} />
   </React.StrictMode>
 );
 
