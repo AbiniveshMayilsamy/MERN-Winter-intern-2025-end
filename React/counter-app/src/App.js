@@ -24,6 +24,20 @@ function App() {
     setVal(val - 1);
     console.log("Decrement Button Clickeed", val);
   };
+
+  useEffect(() => {
+    if (val < 0) {
+      let timer = setTimeout(() => {
+        setVal(0);
+      }, 2000);
+
+      //cleaner function--> Demousing
+      return () => {
+        clearTimeout(timer);
+        console.log("Cleaner function called");
+      };
+    }
+  }, [val]);
   // sideEffects
   // call back function / array of dependencies{Propa/state}
   // usecases- empty array-> runs afte55r initial render
