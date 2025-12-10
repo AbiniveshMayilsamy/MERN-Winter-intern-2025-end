@@ -8,6 +8,14 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import About from "./Pages/About";
 import Cart from "./Pages/Cart";
 import Search from "./Pages/Search";
+import Login from "./Pages/Login";
+import SignUp from "./Pages/SignUp";
+import QuizApp from "./QuizApp";
+import QuizCatalog from "./Pages/QuizCatalog";
+import Quiz from "./Pages/Quiz";
+import Results from "./Pages/Results";
+import Leaderboard from "./Pages/Leaderboard";
+import Admin from "./Pages/Admin";
 
 const routerVariables = createBrowserRouter([
   {
@@ -30,23 +38,57 @@ const routerVariables = createBrowserRouter([
         path: "/search",
         element: <Search></Search>,
       },
+    ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
+  },
+  {
+    path: "/",
+    element: <QuizApp />,
+    children: [
       {
-        path: "*",
-        element: (
-          <h1
-            style={{
-              color: "red",
-              alignItems: "center",
-              justifyContent: "center",
-              display: "flex",
-              height: "100vh",
-            }}
-          >
-            !-- 404 -- Page Not Found --!{" "}
-          </h1>
-        ),
+        path: "/quiz-catalog",
+        element: <QuizCatalog />,
+      },
+      {
+        path: "/quiz/:id",
+        element: <Quiz />,
+      },
+      {
+        path: "/results",
+        element: <Results />,
+      },
+      {
+        path: "/leaderboard",
+        element: <Leaderboard />,
+      },
+      {
+        path: "/admin",
+        element: <Admin />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: (
+      <h1
+        style={{
+          color: "red",
+          alignItems: "center",
+          justifyContent: "center",
+          display: "flex",
+          height: "100vh",
+        }}
+      >
+        404 - Page Not Found
+      </h1>
+    ),
   },
 ]);
 
