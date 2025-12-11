@@ -13,7 +13,12 @@ const QuizHeader = () => {
   return (
     <header style={{ backgroundColor: "#333", color: "white", padding: "15px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: "1200px", margin: "auto" }}>
-        <h2>Quiz Portal</h2>
+        <img 
+          src="/multi quiz portal.png" 
+          alt="Quiz Portal" 
+          onClick={() => navigate("/")} 
+          style={{ height: "40px", cursor: "pointer" }}
+        />
         <nav style={{ display: "flex", gap: "20px" }}>
           {userRole === "admin" ? (
             <>
