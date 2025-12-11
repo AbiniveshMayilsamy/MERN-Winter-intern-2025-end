@@ -1,0 +1,37 @@
+{
+  "id": 2,
+  "title": "Science Quiz",
+  "total_questions": 5,
+  "questions": [
+    {
+      "question_number": 1,
+      "question": "What is H2O?",
+      "options": ["Water", "Oxygen", "Hydrogen", "Carbon"],
+      "answer": "Water"
+    },
+    {
+      "question_number": 2,
+      "question": "What planet is known as the Red Planet?",
+      "options": ["Venus", "Mars", "Jupiter", "Saturn"],
+      "answer": "Mars"
+    },
+    {
+      "question_number": 3,
+      "question": "What is the speed of light?",
+      "options": ["300,000 km/s", "150,000 km/s", "450,000 km/s", "600,000 km/s"],
+      "answer": "300,000 km/s"
+    },
+    {
+      "question_number": 4,
+      "question": "What is the chemical symbol for Gold?",
+      "options": ["Go", "Gd", "Au", "Ag"],
+      "answer": "Au"
+    },
+    {
+      "question_number": 5,
+      "question": "How many planets are in our solar system?",
+      "options": ["7", "8", "9", "10"],
+      "answer": "8"
+    }
+  ]
+}

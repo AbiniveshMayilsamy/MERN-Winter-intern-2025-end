@@ -1,0 +1,37 @@
+{
+  "id": 3,
+  "title": "History Quiz",
+  "total_questions": 5,
+  "questions": [
+    {
+      "question_number": 1,
+      "question": "Who was the first President of the United States?",
+      "options": ["Thomas Jefferson", "George Washington", "Abraham Lincoln", "John Adams"],
+      "answer": "George Washington"
+    },
+    {
+      "question_number": 2,
+      "question": "In which year did World War II end?",
+      "options": ["1943", "1944", "1945", "1946"],
+      "answer": "1945"
+    },
+    {
+      "question_number": 3,
+      "question": "Who built the Great Wall of China?",
+      "options": ["Qin Shi Huang", "Genghis Khan", "Kublai Khan", "Sun Tzu"],
+      "answer": "Qin Shi Huang"
+    },
+    {
+      "question_number": 4,
+      "question": "What year did the Berlin Wall fall?",
+      "options": ["1987", "1988", "1989", "1990"],
+      "answer": "1989"
+    },
+    {
+      "question_number": 5,
+      "question": "Who discovered America?",
+      "options": ["Vasco da Gama", "Christopher Columbus", "Ferdinand Magellan", "Marco Polo"],
+      "answer": "Christopher Columbus"
+    }
+  ]
+}

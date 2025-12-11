@@ -8,8 +8,7 @@ const Home = () => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Home Page</h1>
-      {id && <h2>Page ID: {id}</h2>}
+      <h1>Home Page</h1> {id && <h2>Page ID: {id}</h2>}
       {data && (
         <div>
           <h2>Quiz Data:</h2>
