@@ -1,6 +1,6 @@
 .admin-container {
   min-height: 100vh;
-  background-color: #FFF8DC;
+  background-color: #fff8dc;
   padding: 20px;
 }
 
@@ -36,7 +36,7 @@
 .add-question-btn {
   padding: 10px 20px;
   margin: 10px 5px;
-  background-color: #2196F3;
+  background-color: #2196f3;
   color: white;
   border: none;
   border-radius: 5px;
@@ -46,7 +46,7 @@
 .create-quiz-btn {
   padding: 10px 20px;
   margin: 10px 5px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 5px;

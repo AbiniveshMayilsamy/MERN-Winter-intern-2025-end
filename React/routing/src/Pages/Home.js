@@ -9,41 +9,44 @@ const Home = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [selectedQuiz, setSelectedQuiz] = useState(null);
 
+  // Load all quizzes on mount
   useEffect(() => {
-    const fetchQuizzes = async () => {
+    async function loadQuizzes() {
       try {
-        const response = await fetch("/quizzes.json");
-        const data = await response.json();
+        const res = await fetch("/quizzes.json");
+        const data = await res.json();
         setQuizzes(data);
         console.log("Quizzes:", data);
-      } catch (error) {
-        console.log("Error:", error);
+      } catch (err) {
+        console.log("Error:", err);
       }
-    };
-    fetchQuizzes();
+    }
+    loadQuizzes();
   }, []);
 
+  // Load specific quiz when id changes
   useEffect(() => {
-    if (id) {
-      const fetchQuizDetail = async () => {
-        try {
-          const response = await fetch(`/quiz-${id}.json`);
-          const data = await response.json();
-          setSelectedQuiz(data);
-          console.log("Quiz Detail:", data);
-        } catch (error) {
-          const response = await fetch("/Quiz.json");
-          const data = await response.json();
-          setSelectedQuiz(data);
-        }
-      };
-      fetchQuizDetail();
+    if (!id) return;
+    
+    async function loadQuizDetail() {
+      try {
+        const res = await fetch(`/quiz-${id}.json`);
+        const data = await res.json();
+        setSelectedQuiz(data);
+        console.log("Quiz Detail:", data);
+      } catch (err) {
+        // Fallback to default quiz
+        const res = await fetch("/Quiz.json");
+        const data = await res.json();
+        setSelectedQuiz(data);
+      }
     }
+    loadQuizDetail();
   }, [id]);
 
-  const handleQuizClick = (quizId) => {
+  function handleQuizClick(quizId) {
     navigate(`/${quizId}`);
-  };
+  }
 
   return (
     <div className="home-container">
