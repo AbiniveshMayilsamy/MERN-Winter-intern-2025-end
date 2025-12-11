@@ -81,17 +81,19 @@ const routerVariables = createBrowserRouter([
   {
     path: "*",
     element: (
-      <h1
-        style={{
-          color: "red",
-          alignItems: "center",
-          justifyContent: "center",
-          display: "flex",
-          height: "100vh",
-        }}
-      >
-        404 - Page Not Found
-      </h1>
+      <div style={{ backgroundColor: "black" }}>
+        <h1
+          style={{
+            color: "grey",
+            alignItems: "center",
+            justifyContent: "center",
+            display: "flex",
+            height: "100vh",
+          }}
+        >
+          😮404 - Page Not Found🧐
+        </h1>
+      </div>
     ),
   },
 ]);
