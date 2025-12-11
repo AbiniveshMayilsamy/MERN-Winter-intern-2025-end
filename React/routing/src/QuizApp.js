@@ -4,8 +4,8 @@ import QuizHeader from "./Common/QuizHeader";
 function QuizApp() {
   return (
     <div>
-      <QuizHeader />
-      <Outlet />
+      <QuizHeader></QuizHeader>
+      <Outlet></Outlet>
     </div>
   );
 }

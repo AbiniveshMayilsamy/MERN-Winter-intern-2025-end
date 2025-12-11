@@ -1,44 +1,51 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import "../Styles/QuizHeader.css";
 
-const QuizHeader = () => {
+function QuizHeader() {
   const navigate = useNavigate();
   const userRole = localStorage.getItem("userRole");
 
-  const handleLogout = () => {
+  function handleLogout() {
     localStorage.removeItem("userRole");
     localStorage.removeItem("userName");
-    navigate("/login");
-  };
+    navigate("/");
+  }
+
+  function handleLogoClick() {
+    if (userRole === "admin") {
+      navigate("/quiz/admin");
+    } else {
+      navigate("/quiz");
+    }
+  }
 
   return (
-    <header style={{ backgroundColor: "white", boxShadow: "0 2px 10px rgba(0,0,0,0.1)", padding: "15px 20px" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: "1200px", margin: "auto" }}>
-        <img 
-          src="/multi quiz portal.png" 
-          alt="Quiz Portal" 
-          onClick={() => navigate("/")} 
-          style={{ height: "50px", cursor: "pointer", borderRadius: "10px", objectFit: "contain" }}
+    <header className="quiz-header">
+      <div className="quiz-header-content">
+        <img
+          src="/multi quiz portal.png"
+          alt="Quiz Portal"
+          onClick={handleLogoClick}
+          className="quiz-header-logo"
         />
-        <nav style={{ display: "flex", gap: "25px", alignItems: "center" }}>
+        <nav className="quiz-header-nav">
           {userRole === "admin" ? (
             <>
-              <NavLink to="/quiz/admin" style={{ color: "#333", textDecoration: "none", fontWeight: "500", transition: "color 0.3s" }}>Create Quiz</NavLink>
-              <NavLink to="/quiz/leaderboard" style={{ color: "#333", textDecoration: "none", fontWeight: "500", transition: "color 0.3s" }}>Leaderboard</NavLink>
+              <NavLink to="/quiz/admin" className="quiz-header-link">Create Quiz</NavLink>
+              <NavLink to="/quiz/leaderboard" className="quiz-header-link">Leaderboard</NavLink>
             </>
           ) : (
             <>
-              <NavLink to="/quiz/quiz-catalog" style={{ color: "#333", textDecoration: "none", fontWeight: "500", transition: "color 0.3s" }}>Quizzes</NavLink>
-              <NavLink to="/quiz/results" style={{ color: "#333", textDecoration: "none", fontWeight: "500", transition: "color 0.3s" }}>My Results</NavLink>
-              <NavLink to="/quiz/leaderboard" style={{ color: "#333", textDecoration: "none", fontWeight: "500", transition: "color 0.3s" }}>Leaderboard</NavLink>
+              <NavLink to="/quiz" className="quiz-header-link">Home</NavLink>
+              <NavLink to="/quiz/results" className="quiz-header-link">My Results</NavLink>
+              <NavLink to="/quiz/leaderboard" className="quiz-header-link">Leaderboard</NavLink>
             </>
           )}
-          <button onClick={handleLogout} style={{ backgroundColor: "#f44336", border: "none", color: "white", padding: "8px 20px", cursor: "pointer", borderRadius: "5px", fontWeight: "500" }}>
-            Logout
-          </button>
+          <button onClick={handleLogout} className="quiz-header-logout">Logout</button>
         </nav>
       </div>
     </header>
   );
-};
+}
 
 export default QuizHeader;

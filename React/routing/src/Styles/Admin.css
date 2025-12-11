@@ -1,6 +1,7 @@
 .admin-container {
   min-height: 100vh;
   background-color: #fff8dc;
+  border: 1px solid black;
   padding: 20px;
 }
 

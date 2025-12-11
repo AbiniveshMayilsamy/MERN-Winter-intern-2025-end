@@ -3,11 +3,12 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f0f0f0;
+  background-color: #fff8dc;
 }
 
 .login-container {
-  background-color: #e0e0e0;
+  background-color: #ffffff;
+  color: rgb(58, 9, 55);
   padding: 50px;
   max-width: 400px;
   border-radius: 10px;
@@ -19,15 +20,17 @@
   padding: 10px;
   margin: 10px 0;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #080000;
 }
 
 .login-button {
-  width: 100%;
+  width: 50%;
   padding: 10px;
-  background-color: #4CAF50;
-  color: white;
+  font-size: 20 px;
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  font-family: Georgia, "Times New Roman", Times, serif;
   border: none;
-  border-radius: 5px;
+  border-radius: 15px 15px 15px 15px;
   cursor: pointer;
 }

@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import "../Styles/Quiz.css";
 
-const Quiz = () => {
+function Quiz() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [quiz, setQuiz] = useState(null);
@@ -9,13 +10,12 @@ const Quiz = () => {
   const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
-    const fetchQuizData = async () => {
+    async function loadQuiz() {
       try {
         if (id === "1") {
-          const response = await fetch("/Quiz.json");
-          const data = await response.json();
-          console.log("Fetched Quiz Data:", data);
-          const formattedQuiz = {
+          const res = await fetch("/Quiz.json");
+          const data = await res.json();
+          setQuiz({
             id: 1,
             title: data.title,
             questions: data.questions.map((q) => ({
@@ -23,30 +23,26 @@ const Quiz = () => {
               options: q.options,
               answer: q.options.indexOf(q.answer),
             })),
-          };
-          console.log("Formatted Quiz:", formattedQuiz);
-          setQuiz(formattedQuiz);
+          });
         } else {
           const quizzes = JSON.parse(localStorage.getItem("quizzes")) || [];
-          const foundQuiz = quizzes.find((q) => q.id === parseInt(id));
-          if (foundQuiz) {
-            setQuiz(foundQuiz);
-          }
+          const found = quizzes.find((q) => q.id === parseInt(id));
+          if (found) setQuiz(found);
         }
-      } catch (error) {
-        console.log("Error fetching quiz:", error);
+      } catch (err) {
+        console.log("Error:", err);
       }
-    };
-    fetchQuizData();
+    }
+    loadQuiz();
   }, [id]);
 
-  const handleAnswer = (optionIndex) => {
+  function handleAnswer(optionIndex) {
     const newAnswers = [...answers];
     newAnswers[currentQuestion] = optionIndex;
     setAnswers(newAnswers);
-  };
+  }
 
-  const handleNext = () => {
+  function handleNext() {
     if (currentQuestion < quiz.questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
@@ -66,66 +62,33 @@ const Quiz = () => {
       localStorage.setItem("results", JSON.stringify(results));
       navigate("/quiz/results");
     }
-  };
+  }
 
-  if (!quiz)
-    return (
-      <div style={{ padding: "20px", textAlign: "center" }}>
-        Loading quiz...
-      </div>
-    );
+  if (!quiz) return <div className="quiz-loading">Loading...</div>;
 
   const question = quiz.questions[currentQuestion];
 
   return (
-    <div style={{ padding: "20px", maxWidth: "600px", margin: "auto" }}>
+    <div className="quiz-container">
       <h2>{quiz.title}</h2>
-      <p>
-        Question {currentQuestion + 1} of {quiz.questions.length}
-      </p>
-      <h3>{question.question}</h3>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-          margin: "20px 0",
-        }}
-      >
+      <p className="quiz-progress">Question {currentQuestion + 1} of {quiz.questions.length}</p>
+      <h3 className="quiz-question">{question.question}</h3>
+      <div className="quiz-options">
         {question.options.map((option, idx) => (
           <button
             key={idx}
             onClick={() => handleAnswer(idx)}
-            style={{
-              padding: "15px",
-              backgroundColor:
-                answers[currentQuestion] === idx ? "#4CAF50" : "#f0f0f0",
-              color: answers[currentQuestion] === idx ? "white" : "black",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
+            className={`quiz-option ${answers[currentQuestion] === idx ? 'selected' : ''}`}
           >
             {option}
           </button>
         ))}
       </div>
-      <button
-        onClick={handleNext}
-        disabled={answers[currentQuestion] === undefined}
-        style={{
-          padding: "10px 20px",
-          backgroundColor: "#2196F3",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
+      <button onClick={handleNext} disabled={answers[currentQuestion] === undefined} className="quiz-next-btn">
         {currentQuestion < quiz.questions.length - 1 ? "Next" : "Submit"}
       </button>
     </div>
   );
-};
+}
 
 export default Quiz;

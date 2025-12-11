@@ -1,7 +1,7 @@
 .catalog-container {
   padding: 20px;
   min-height: 100vh;
-  background-color: #FFF8DC;
+  background-color: #fff8dc;
 }
 
 .catalog-title {
@@ -12,7 +12,7 @@
 .catalog-grid {
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: auto;
   max-width: 1200px;
   margin: auto;
 }
@@ -22,13 +22,13 @@
   border: 1px solid #ccc;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .start-button {
   width: 100%;
   padding: 10px 20px;
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 5px;
