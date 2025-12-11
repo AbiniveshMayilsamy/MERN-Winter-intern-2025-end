@@ -27,6 +27,10 @@ const routerVariables = createBrowserRouter([
         element: <Home></Home>,
       },
       {
+        path: "/:id",
+        element: <Home></Home>,
+      },
+      {
         path: "/about",
         element: <About></About>,
       },
