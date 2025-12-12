@@ -9,7 +9,7 @@ function SignUp() {
 
   function handleSignUp(e) {
     e.preventDefault();
-    localStorage.setItem("userRole", "user");
+    localStorage.setItem("userRole", "student");
     localStorage.setItem("userName", email);
     navigate("/quiz");
   }

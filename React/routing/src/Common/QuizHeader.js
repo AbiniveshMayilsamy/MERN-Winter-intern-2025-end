@@ -8,6 +8,7 @@ function QuizHeader() {
   function handleLogout() {
     localStorage.removeItem("userRole");
     localStorage.removeItem("userName");
+    localStorage.removeItem("currentQuizStudent");
     navigate("/");
   }
 
@@ -37,7 +38,6 @@ function QuizHeader() {
           ) : (
             <>
               <NavLink to="/quiz" className="quiz-header-link">Home</NavLink>
-              <NavLink to="/quiz/results" className="quiz-header-link">My Results</NavLink>
               <NavLink to="/quiz/leaderboard" className="quiz-header-link">Leaderboard</NavLink>
             </>
           )}

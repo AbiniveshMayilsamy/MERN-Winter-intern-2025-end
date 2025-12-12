@@ -7,7 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import QuizApp from "./QuizApp";
 import QuizCatalog from "./Pages/QuizCatalog";
 import Quiz from "./Pages/Quiz";
-import Results from "./Pages/Results";
+import QuizAuth from "./Pages/QuizAuth";
 import Leaderboard from "./Pages/Leaderboard";
 import Admin from "./Pages/Admin";
 
@@ -19,8 +19,8 @@ const router = createBrowserRouter([
     element: <QuizApp />,
     children: [
       { path: "", element: <QuizCatalog /> },
-      { path: ":id", element: <Quiz /> },
-      { path: "results", element: <Results /> },
+      { path: "auth/:id", element: <QuizAuth /> },
+      { path: "start/:id", element: <Quiz /> },
       { path: "leaderboard", element: <Leaderboard /> },
       { path: "admin", element: <Admin /> },
     ],

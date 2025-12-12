@@ -4,18 +4,45 @@ import "../Styles/QuizCatalog.css";
 
 function QuizCatalog() {
   const navigate = useNavigate();
-  const [quizzes, setQuizzes] = useState([]);
+  const [quizzesByClass, setQuizzesByClass] = useState({});
 
   useEffect(() => {
     async function loadQuizzes() {
       try {
         const res = await fetch("/quizzes.json");
-        const data = await res.json();
+        const jsonData = await res.json();
+        
+        const jsonQuizzes = [{
+          id: 1,
+          title: jsonData.title,
+          description: "General Knowledge Test",
+          questions: jsonData.total_questions,
+          total_questions: jsonData.total_questions,
+          timeLimit: 30,
+          className: "General"
+        }];
+        
         const saved = JSON.parse(localStorage.getItem("quizzes")) || [];
-        setQuizzes([...data, ...saved]);
+        const allQuizzes = [...jsonQuizzes, ...saved];
+        
+        const grouped = allQuizzes.reduce((acc, quiz) => {
+          const className = quiz.className || "General";
+          if (!acc[className]) acc[className] = [];
+          acc[className].push(quiz);
+          return acc;
+        }, {});
+        
+        setQuizzesByClass(grouped);
       } catch (err) {
+        console.log("Error loading JSON:", err);
         const saved = JSON.parse(localStorage.getItem("quizzes")) || [];
-        setQuizzes(saved);
+        const grouped = saved.reduce((acc, quiz) => {
+          const className = quiz.className || "General";
+          if (!acc[className]) acc[className] = [];
+          acc[className].push(quiz);
+          return acc;
+        }, {});
+        setQuizzesByClass(grouped);
       }
     }
     loadQuizzes();
@@ -24,17 +51,28 @@ function QuizCatalog() {
   return (
     <div className="catalog-container">
       <h2 className="catalog-title">Quiz Catalog</h2>
-      <div className="catalog-grid">
-        {quizzes.map((quiz) => (
-          <div key={quiz.id} className="catalog-card">
-            <h3>{quiz.title}</h3>
-            <p>{quiz.description || "Test your knowledge"}</p>
-            <p><strong>Questions:</strong> {quiz.questions?.length || quiz.questions || quiz.total_questions}</p>
-            {quiz.category && <p><strong>Category:</strong> {quiz.category}</p>}
-            <button onClick={() => navigate(`/quiz/${quiz.id}`)} className="start-button">Start Quiz</button>
+      
+      {Object.keys(quizzesByClass).length === 0 ? (
+        <p style={{ textAlign: "center" }}>No quizzes available. Admin can create quizzes.</p>
+      ) : (
+        Object.keys(quizzesByClass).map(className => (
+          <div key={className} style={{ marginBottom: "40px" }}>
+            <h3 style={{ marginBottom: "20px", borderBottom: "2px solid #333", paddingBottom: "10px" }}>{className} Class</h3>
+            <div className="catalog-grid">
+              {quizzesByClass[className].map((quiz) => (
+                <div key={quiz.id} className="catalog-card">
+                  <h3>{quiz.title}</h3>
+                  <p>{quiz.description || "Test your knowledge"}</p>
+                  <p><strong>Questions:</strong> {quiz.questions?.length || quiz.questions || quiz.total_questions}</p>
+                  <p><strong>Time Limit:</strong> {quiz.timeLimit || 30}s per question</p>
+                  {quiz.className && <p><strong>Class:</strong> {quiz.className}</p>}
+                  <button onClick={() => navigate(`/quiz/auth/${quiz.id}`)} className="start-button">Start Quiz</button>
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
-      </div>
+        ))
+      )}
     </div>
   );
 }
