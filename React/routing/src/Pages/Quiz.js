@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import QuizLeaderboard from "../Components/QuizLeaderboard";
 import "../Styles/Quiz.css";
@@ -25,12 +25,22 @@ function Quiz() {
 
     async function loadQuiz() {
       try {
+        let res, data;
         if (id === "1") {
-          const res = await fetch("/Quiz.json");
-          const data = await res.json();
+          res = await fetch("/Quiz.json");
+          data = await res.json();
+        } else if (id === "2") {
+          res = await fetch("/quiz-2.json");
+          data = await res.json();
+        } else if (id === "3") {
+          res = await fetch("/quiz-3.json");
+          data = await res.json();
+        }
+        
+        if (data) {
           setCloudinaryCloudName(data.cloudinary_cloud_name || "demo");
           setQuiz({
-            id: 1,
+            id: parseInt(id),
             title: data.title,
             timeLimit: 30,
             questions: data.questions.map((q) => ({
@@ -56,40 +66,24 @@ function Quiz() {
     loadQuiz();
   }, [id, student, navigate]);
 
-  useEffect(() => {
-    if (!quiz || showLeaderboard) return;
-    
-    const timer = setInterval(() => {
-      setTimeLeft(prev => {
-        if (prev <= 1) {
-          handleNext();
-          return quiz.timeLimit || 30;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [quiz, currentQuestion, showLeaderboard]);
-
   function handleAnswer(optionIndex) {
     const newAnswers = [...answers];
     newAnswers[currentQuestion] = optionIndex;
     setAnswers(newAnswers);
   }
 
-  function calculateScore() {
+  const calculateScore = useCallback(() => {
     const baseScore = 1000;
     const timeBonus = timeLeft * 10;
     return baseScore + timeBonus;
-  }
+  }, [timeLeft]);
 
   function getCloudinaryUrl(imageId) {
     if (!imageId) return null;
     return `https://res.cloudinary.com/${cloudinaryCloudName}/image/upload/${imageId}`;
   }
 
-  function handleNext() {
+  const handleNext = useCallback(() => {
     const isCorrect = answers[currentQuestion] === quiz.questions[currentQuestion].answer;
     const questionScore = isCorrect ? calculateScore() : 0;
     const newTotalScore = totalScore + questionScore;
@@ -136,7 +130,23 @@ function Quiz() {
         navigate("/quiz/leaderboard");
       }
     }, 3000);
-  }
+  }, [answers, currentQuestion, quiz, totalScore, id, student, navigate, calculateScore]);
+
+  useEffect(() => {
+    if (!quiz || showLeaderboard) return;
+    
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          handleNext();
+          return quiz.timeLimit || 30;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [quiz, showLeaderboard, handleNext]);
 
   if (!quiz || !student) return <div className="quiz-loading">Loading...</div>;
 

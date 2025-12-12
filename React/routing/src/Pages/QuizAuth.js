@@ -11,14 +11,26 @@ function QuizAuth() {
 
   useEffect(() => {
     async function loadQuiz() {
-      if (id === "1") {
-        const res = await fetch("/Quiz.json");
-        const data = await res.json();
-        setQuiz({ id: 1, title: data.title, className: "General" });
-      } else {
-        const quizzes = JSON.parse(localStorage.getItem("quizzes")) || [];
-        const found = quizzes.find(q => q.id === parseInt(id));
-        setQuiz(found);
+      try {
+        if (id === "1") {
+          const res = await fetch("/Quiz.json");
+          const data = await res.json();
+          setQuiz({ id: 1, title: data.title, className: "General" });
+        } else if (id === "2") {
+          const res = await fetch("/quiz-2.json");
+          const data = await res.json();
+          setQuiz({ id: 2, title: data.title, className: "General" });
+        } else if (id === "3") {
+          const res = await fetch("/quiz-3.json");
+          const data = await res.json();
+          setQuiz({ id: 3, title: data.title, className: "General" });
+        } else {
+          const quizzes = JSON.parse(localStorage.getItem("quizzes")) || [];
+          const found = quizzes.find(q => q.id === parseInt(id));
+          setQuiz(found);
+        }
+      } catch (err) {
+        console.log("Error:", err);
       }
     }
     loadQuiz();

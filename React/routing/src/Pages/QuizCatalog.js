@@ -9,18 +9,43 @@ function QuizCatalog() {
   useEffect(() => {
     async function loadQuizzes() {
       try {
-        const res = await fetch("/quizzes.json");
-        const jsonData = await res.json();
+        const jsonQuizzes = [];
         
-        const jsonQuizzes = [{
+        const res1 = await fetch("/Quiz.json");
+        const data1 = await res1.json();
+        jsonQuizzes.push({
           id: 1,
-          title: jsonData.title,
+          title: data1.title,
           description: "General Knowledge Test",
-          questions: jsonData.total_questions,
-          total_questions: jsonData.total_questions,
+          questions: data1.total_questions,
+          total_questions: data1.total_questions,
           timeLimit: 30,
           className: "General"
-        }];
+        });
+
+        const res2 = await fetch("/quiz-2.json");
+        const data2 = await res2.json();
+        jsonQuizzes.push({
+          id: 2,
+          title: data2.title,
+          description: "Science Knowledge Test",
+          questions: data2.total_questions,
+          total_questions: data2.total_questions,
+          timeLimit: 30,
+          className: "General"
+        });
+
+        const res3 = await fetch("/quiz-3.json");
+        const data3 = await res3.json();
+        jsonQuizzes.push({
+          id: 3,
+          title: data3.title,
+          description: "History Knowledge Test",
+          questions: data3.total_questions,
+          total_questions: data3.total_questions,
+          timeLimit: 30,
+          className: "General"
+        });
         
         const saved = JSON.parse(localStorage.getItem("quizzes")) || [];
         const allQuizzes = [...jsonQuizzes, ...saved];
