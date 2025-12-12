@@ -10,6 +10,8 @@ import Quiz from "./Pages/Quiz";
 import QuizAuth from "./Pages/QuizAuth";
 import Leaderboard from "./Pages/Leaderboard";
 import Admin from "./Pages/Admin";
+import Feedback from "./Pages/Feedback";
+import FeedbackList from "./Pages/FeedbackList";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login /> },
@@ -23,6 +25,8 @@ const router = createBrowserRouter([
       { path: "start/:id", element: <Quiz /> },
       { path: "leaderboard", element: <Leaderboard /> },
       { path: "admin", element: <Admin /> },
+      { path: "feedback", element: <Feedback /> },
+      { path: "feedbacks", element: <FeedbackList /> },
     ],
   },
   { path: "*", element: <h1 style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>404</h1> },

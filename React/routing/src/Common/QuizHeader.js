@@ -39,6 +39,7 @@ function QuizHeader() {
             <>
               <NavLink to="/quiz" className="quiz-header-link">Home</NavLink>
               <NavLink to="/quiz/leaderboard" className="quiz-header-link">Leaderboard</NavLink>
+              <NavLink to="/quiz/feedback" className="quiz-header-link">Feedback</NavLink>
             </>
           )}
           <button onClick={handleLogout} className="quiz-header-logout">Logout</button>

@@ -1,8 +1,10 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../Styles/Admin.css";
 
 function Admin() {
+  const navigate = useNavigate();
   const [showAddClass, setShowAddClass] = useState(false);
   const { register, control, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -59,13 +61,20 @@ function Admin() {
       <div className="admin-content">
         <h2 className="admin-header">Admin Dashboard</h2>
         
-        <button 
-          onClick={() => setShowAddClass(!showAddClass)} 
-          className="add-question-btn"
-          style={{ marginBottom: "20px" }}
-        >
-          {showAddClass ? "Hide Add Class" : "Add New Class"}
-        </button>
+        <div style={{ display: "flex", gap: "15px", marginBottom: "20px" }}>
+          <button 
+            onClick={() => setShowAddClass(!showAddClass)} 
+            className="add-question-btn"
+          >
+            {showAddClass ? "Hide Add Class" : "Add New Class"}
+          </button>
+          <button 
+            onClick={() => navigate("/quiz/feedbacks")} 
+            className="add-question-btn"
+          >
+            View Feedbacks
+          </button>
+        </div>
 
         {showAddClass && (
           <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "10px", marginBottom: "20px" }}>
