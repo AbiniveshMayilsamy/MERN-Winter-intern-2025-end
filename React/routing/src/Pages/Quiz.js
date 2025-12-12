@@ -7,6 +7,7 @@ function Quiz() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [quiz, setQuiz] = useState(null);
+  const [cloudinaryCloudName, setCloudinaryCloudName] = useState("demo");
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [timeLeft, setTimeLeft] = useState(30);
@@ -27,6 +28,7 @@ function Quiz() {
         if (id === "1") {
           const res = await fetch("/Quiz.json");
           const data = await res.json();
+          setCloudinaryCloudName(data.cloudinary_cloud_name || "demo");
           setQuiz({
             id: 1,
             title: data.title,
@@ -35,6 +37,7 @@ function Quiz() {
               question: q.question,
               options: q.options,
               answer: q.options.indexOf(q.answer),
+              imageId: q.image_id
             })),
           });
         } else {
@@ -42,6 +45,7 @@ function Quiz() {
           const found = quizzes.find((q) => q.id === parseInt(id));
           if (found) {
             setQuiz(found);
+            setCloudinaryCloudName(found.cloudinary_cloud_name || "demo");
             setTimeLeft(found.timeLimit || 30);
           }
         }
@@ -78,6 +82,11 @@ function Quiz() {
     const baseScore = 1000;
     const timeBonus = timeLeft * 10;
     return baseScore + timeBonus;
+  }
+
+  function getCloudinaryUrl(imageId) {
+    if (!imageId) return null;
+    return `https://res.cloudinary.com/${cloudinaryCloudName}/image/upload/${imageId}`;
   }
 
   function handleNext() {
@@ -124,7 +133,7 @@ function Quiz() {
         results.push(result);
         localStorage.setItem("results", JSON.stringify(results));
         localStorage.removeItem("currentQuizStudent");
-        navigate("/quiz/results");
+        navigate("/quiz/leaderboard");
       }
     }, 3000);
   }
@@ -138,6 +147,7 @@ function Quiz() {
   const question = quiz.questions[currentQuestion];
   const timePercentage = (timeLeft / (quiz.timeLimit || 30)) * 100;
   const timerClass = timePercentage > 50 ? "" : timePercentage > 25 ? "warning" : "danger";
+  const imageUrl = getCloudinaryUrl(question.imageId);
 
   return (
     <div className="quiz-container">
@@ -150,6 +160,7 @@ function Quiz() {
         <div className={`quiz-timer-fill ${timerClass}`} style={{ width: `${timePercentage}%` }}></div>
       </div>
       <h3 className="quiz-question">{question.question}</h3>
+      {imageUrl && <img src={imageUrl} alt="Question" className="quiz-image" />}
       <div className="quiz-options">
         {question.options.map((option, idx) => (
           <button

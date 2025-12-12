@@ -1,18 +1,21 @@
 {
   "title": "Extended General Knowledge Quiz",
   "total_questions": 20,
+  "cloudinary_cloud_name": "demo",
   "questions": [
     {
       "question_number": 1,
       "question": "What is the capital city of Australia?",
       "options": ["Sydney", "Melbourne", "Canberra", "Perth"],
-      "answer": "Canberra"
+      "answer": "Canberra",
+      "image_id": "sample"
     },
     {
       "question_number": 2,
       "question": "Which element has the chemical symbol 'Fe'?",
       "options": ["Iron", "Gold", "Silver", "Fluorine"],
-      "answer": "Iron"
+      "answer": "Iron",
+      "image_id": "samples/chemistry"
     },
     {
       "question_number": 3,
@@ -23,7 +26,8 @@
         "Leonardo da Vinci",
         "Claude Monet"
       ],
-      "answer": "Leonardo da Vinci"
+      "answer": "Leonardo da Vinci",
+      "image_id": "samples/art"
     },
     {
       "question_number": 4,
@@ -34,61 +38,71 @@
         "Arctic Ocean",
         "Pacific Ocean"
       ],
-      "answer": "Pacific Ocean"
+      "answer": "Pacific Ocean",
+      "image_id": "samples/ocean"
     },
     {
       "question_number": 5,
       "question": "In which year did the Titanic sink?",
       "options": ["1905", "1912", "1918", "1923"],
-      "answer": "1912"
+      "answer": "1912",
+      "image_id": "samples/history"
     },
     {
       "question_number": 6,
       "question": "What is the hardest natural substance on Earth?",
       "options": ["Gold", "Iron", "Diamond", "Platinum"],
-      "answer": "Diamond"
+      "answer": "Diamond",
+      "image_id": "samples/nature"
     },
     {
       "question_number": 7,
       "question": "Which planet is closest to the Sun?",
       "options": ["Venus", "Mars", "Mercury", "Earth"],
-      "answer": "Mercury"
+      "answer": "Mercury",
+      "image_id": "samples/space"
     },
     {
       "question_number": 8,
       "question": "How many bones are in the adult human body?",
       "options": ["206", "208", "210", "212"],
-      "answer": "206"
+      "answer": "206",
+      "image_id": "samples/biology"
     },
     {
       "question_number": 9,
       "question": "What is the currency of Japan?",
       "options": ["Won", "Yen", "Yuan", "Dollar"],
-      "answer": "Yen"
+      "answer": "Yen",
+      "image_id": "samples/currency"
     },
     {
       "question_number": 10,
       "question": "Who represents the 'M' in the acronym HTML?",
       "options": ["Main", "Markup", "Machine", "Modern"],
-      "answer": "Markup"
+      "answer": "Markup",
+      "image_id": "samples/tech"
     },
     {
       "question_number": 11,
       "question": "What is the square root of 64?",
       "options": ["6", "7", "8", "9"],
-      "answer": "8"
+      "answer": "8",
+      "image_id": "samples/math"
     },
     {
       "question_number": 12,
       "question": "Which country is home to the Kangaroo?",
       "options": ["New Zealand", "South Africa", "Australia", "Brazil"],
-      "answer": "Australia"
+      "answer": "Australia",
+      "image_id": "samples/animals"
     },
     {
       "question_number": 13,
       "question": "What gas do plants absorb from the atmosphere for photosynthesis?",
       "options": ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen"],
-      "answer": "Carbon Dioxide"
+      "answer": "Carbon Dioxide",
+      "image_id": "samples/plants"
     },
     {
       "question_number": 14,
@@ -99,31 +113,36 @@
         "Neil Armstrong",
         "Michael Collins"
       ],
-      "answer": "Neil Armstrong"
+      "answer": "Neil Armstrong",
+      "image_id": "samples/moon"
     },
     {
       "question_number": 15,
       "question": "What consists of a proton, neutron, and electron?",
       "options": ["Molecule", "Atom", "Cell", "Compound"],
-      "answer": "Atom"
+      "answer": "Atom",
+      "image_id": "samples/science"
     },
     {
       "question_number": 16,
       "question": "Which continent is the Sahara Desert located in?",
       "options": ["Asia", "South America", "Africa", "Australia"],
-      "answer": "Africa"
+      "answer": "Africa",
+      "image_id": "samples/desert"
     },
     {
       "question_number": 17,
       "question": "What is the boiling point of water at sea level?",
       "options": ["90°C", "100°C", "110°C", "120°C"],
-      "answer": "100°C"
+      "answer": "100°C",
+      "image_id": "samples/water"
     },
     {
       "question_number": 18,
       "question": "Which language is primarily spoken in Brazil?",
       "options": ["Spanish", "Portuguese", "French", "English"],
-      "answer": "Portuguese"
+      "answer": "Portuguese",
+      "image_id": "samples/language"
     },
     {
       "question_number": 19,
@@ -134,13 +153,15 @@
         "J.K. Rowling",
         "Stephen King"
       ],
-      "answer": "J.K. Rowling"
+      "answer": "J.K. Rowling",
+      "image_id": "samples/books"
     },
     {
       "question_number": 20,
       "question": "What is the smallest prime number?",
       "options": ["0", "1", "2", "3"],
-      "answer": "2"
+      "answer": "2",
+      "image_id": "samples/numbers"
     }
   ]
 }

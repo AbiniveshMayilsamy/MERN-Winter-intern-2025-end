@@ -9,7 +9,8 @@ function Admin() {
       title: "",
       className: "",
       timeLimit: 30,
-      questions: [{ question: "", options: ["", "", "", ""], answer: 0 }]
+      cloudinary_cloud_name: "demo",
+      questions: [{ question: "", options: ["", "", "", ""], answer: 0, imageId: "" }]
     }
   });
   const { fields, append, remove } = useFieldArray({ control, name: "questions" });
@@ -23,10 +24,12 @@ function Admin() {
       title: data.title,
       className: data.className,
       timeLimit: parseInt(data.timeLimit),
+      cloudinary_cloud_name: data.cloudinary_cloud_name,
       questions: data.questions.map(q => ({
         question: q.question,
         options: q.options,
-        answer: parseInt(q.answer)
+        answer: parseInt(q.answer),
+        imageId: q.imageId
       }))
     };
     quizzes.push(newQuiz);
@@ -90,11 +93,14 @@ function Admin() {
           </select>
 
           <input {...register("timeLimit", { required: true })} type="number" placeholder="Time Limit (seconds per question)" className="admin-input" />
+          
+          <input {...register("cloudinary_cloud_name")} placeholder="Cloudinary Cloud Name (default: demo)" className="admin-input" />
 
           {fields.map((field, qIdx) => (
             <div key={field.id} className="question-box">
               <h4>Question {qIdx + 1}</h4>
               <input {...register(`questions.${qIdx}.question`, { required: true })} placeholder="Question" className="admin-input" />
+              <input {...register(`questions.${qIdx}.imageId`)} placeholder="Cloudinary Image ID (optional)" className="admin-input" />
               {[0, 1, 2, 3].map(oIdx => (
                 <input key={oIdx} {...register(`questions.${qIdx}.options.${oIdx}`, { required: true })} placeholder={`Option ${oIdx + 1}`} className="admin-input" />
               ))}
@@ -107,7 +113,7 @@ function Admin() {
               {fields.length > 1 && <button type="button" onClick={() => remove(qIdx)} className="add-question-btn">Remove</button>}
             </div>
           ))}
-          <button type="button" onClick={() => append({ question: "", options: ["", "", "", ""], answer: 0 })} className="add-question-btn">Add Question</button>
+          <button type="button" onClick={() => append({ question: "", options: ["", "", "", ""], answer: 0, imageId: "" })} className="add-question-btn">Add Question</button>
           <button type="submit" className="create-quiz-btn">Create Quiz</button>
         </form>
       </div>
