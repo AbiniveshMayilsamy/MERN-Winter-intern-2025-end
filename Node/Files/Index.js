@@ -53,7 +53,8 @@ const http = require("http");
 
 // we have to create a server
 
-// let htmlData = fs.readFileSync("./Files/index.html", "utf-8");
+let htmlData = fs.readFileSync("./Files/index.html", "utf-8");
+let htmlData1 = fs.readFileSync("./Files/about.html", "utf-8");
 
 // const server = http.createServer((req, res) => {
 //   res.end(htmlData);
@@ -61,8 +62,20 @@ const http = require("http");
 
 let json = fs.readFileSync("./Files/abc.json", "utf-8");
 
+// const server = http.createServer((req, res) => {
+//   res.end(json);
+// });
+
 const server = http.createServer((req, res) => {
-  res.end(json);
+  if (req.url === "/") {
+    res.end(htmlData);
+  } else if (req.url === "/about") {
+    res.end(htmlData1);
+  } else if (req.url === "/api") {
+    res.end(json);
+  } else {
+    res.end("server created using node js");
+  }
 });
 
 server.listen(8000, "127.0.0.1", () => {
