@@ -53,10 +53,16 @@ const http = require("http");
 
 // we have to create a server
 
-let htmlData = fs.readFileSync("./Files/index.html", "utf-8");
+// let htmlData = fs.readFileSync("./Files/index.html", "utf-8");
+
+// const server = http.createServer((req, res) => {
+//   res.end(htmlData);
+// });
+
+let json = fs.readFileSync("./Files/abc.json", "utf-8");
 
 const server = http.createServer((req, res) => {
-  res.end(htmlData);
+  res.end(json);
 });
 
 server.listen(8000, "127.0.0.1", () => {

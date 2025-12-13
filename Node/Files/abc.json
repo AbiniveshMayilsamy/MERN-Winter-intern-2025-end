@@ -1,0 +1,22 @@
+{
+  "id": 101,
+  "name": "Alex Johnson",
+  "isStudent": true,
+  "email": "alex.j@example.com",
+  "skills": ["JavaScript", "Python", "SQL"],
+  "address": {
+    "street": "123 Tech Park",
+    "city": "Chennai",
+    "zipCode": "600001"
+  },
+  "projects": [
+    {
+      "title": "Portfolio Website",
+      "status": "Completed"
+    },
+    {
+      "title": "Task Manager App",
+      "status": "In Progress"
+    }
+  ]
+}
