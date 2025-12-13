@@ -69,7 +69,7 @@ let json = fs.readFileSync("./Files/abc.json", "utf-8");
 const server = http.createServer((req, res) => {
   if (req.url === "/") {
     res.end(htmlData);
-  } else if (req.url === "/about") {
+  } else if (req.url === "/about.html") {
     res.end(htmlData1);
   } else if (req.url === "/api") {
     res.end(json);
