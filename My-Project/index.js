@@ -1,41 +1,54 @@
+const { time } = require("console");
 const express = require("express");
 const fs = require("fs");
-const { STATUS_CODES } = require("http");
 const app = express();
 app.use(express.json());
+let jsonData = JSON.parse(fs.readFileSync("menu.json", "utf-8"));
 
-// read json file
+app.use((req, res, next) => {
+  console.log("Hello from the middleware");
+  next();
+  req.requestTime = new Date().toISOString();
+  console.log(req.requestTime);
+});
 
-const jsonData = JSON.parse(fs.readFileSync("menu.json", "utf-8"));
-console.log(jsonData);
+// middleware to say just "Hi"
+app.use((req, res, next) => {
+  console.log("Hi");
+  next();
+  req.requestTime2 = new Date().toISOString();
+  console.log(req.requestTime2);
+});
+// Controller Logic
 
-//  CRUD Operations
-// C: Create
-// R: Read
-// U: Update -> Put and Patch
-// D: Delete
-
-app.get("/api/v2/menu/", (req, res) => {
+const getMenu = (req, res) => {
+  let jsonData = JSON.parse(fs.readFileSync("menu.json", "utf-8"));
   res.status(200).json({
     status: "success",
     length: jsonData.length,
+    timeOfHit: req.requestTime,
     data: {
       jsonData,
     },
   });
-});
+};
 
-// single data
-app.get("/api/v2/menu/single/:id", (req, res) => {
-  const id = req.params.id * 1;
-  let singleData = jsonData.find((el) => el.id === id);
-  //   res.status(200).json({
-  //     status: "success",
-  //     data: {
-  //       singleData,
-  //     },
-  //   });
-  // });
+const getSingleMenuItem = (req, res) => {
+  let jsonData = JSON.parse(fs.readFileSync("menu.json", "utf-8"));
+  const id = req.params.id;
+  let singleData = null;
+  timeOfHit = req.requestTime;
+  for (const section of jsonData) {
+    if (section.card && section.card.card && section.card.card.itemCards) {
+      const foundItem = section.card.card.itemCards.find(
+        (item) => item.card.info.id === id
+      );
+      if (foundItem) {
+        singleData = foundItem.card.info;
+        break;
+      }
+    }
+  }
   if (!singleData) {
     return res.status(404).json({
       status: "fail",
@@ -48,93 +61,247 @@ app.get("/api/v2/menu/single/:id", (req, res) => {
       singleData,
     },
   });
-});
+};
 
-app.post("/api/v2/menu/single/:id", (req, res) => {
-  const id = jsonData.length;
-  const newData = Object.assign({ id: id + 1 }, req.body);
-  jsonData.push(newData);
-  fs.writeFile("menu.json", JSON.stringify(jsonData), "utf-8", (err) => {
-    if (err) {
-      res.status(500).json({
-        status: "error",
-        message: "Internal Server Error",
-      });
-      res.status(500).json({
-        status: "error",
-        message: STATUS_CODES[500],
-      });
-    } else {
-      res.status(201).json({
-        status: "success",
-        data: newData,
-        STATUS_CODES: STATUS_CODES[201],
-      });
-      //showing status code message
-      res.status(201).json({
-        status: "success",
-        data: newData,
-        STATUS_CODES: STATUS_CODES[201],
-      });
+const putMenuItem = (req, res) => {
+  let jsonData = JSON.parse(fs.readFileSync("menu.json", "utf-8"));
+  const id = req.params.id;
+  let foundItemInfo = null;
+  timeOfHit = req.requestTime;
+
+  for (const section of jsonData) {
+    if (section.card && section.card.card && section.card.card.itemCards) {
+      const item = section.card.card.itemCards.find(
+        (i) => i.card.info.id === id
+      );
+      if (item) {
+        Object.assign(item.card.info, req.body);
+        foundItemInfo = item.card.info;
+        break;
+      }
     }
-  });
-});
-// update data
-app.put("/api/v2/menu/single/:id", (req, res) => {
-  const id = req.params.id * 1;
-  let singleData = jsonData.find((el) => el.id === id);
-  if (!singleData) {
+  }
+};
+
+const deleteMenuItem = (req, res) => {
+  let jsonData = JSON.parse(fs.readFileSync("menu.json", "utf-8"));
+  const id = req.params.id;
+  let deleted = false;
+  timeOfHit = req.requestTime;
+  for (const section of jsonData) {
+    if (section.card && section.card.card && section.card.card.itemCards) {
+      const index = section.card.card.itemCards.findIndex(
+        (item) => item.card.info.id === id
+      );
+      if (index !== -1) {
+        section.card.card.itemCards.splice(index, 1);
+        deleted = true;
+        break;
+      }
+    }
+  }
+  if (!deleted) {
     return res.status(404).json({
       status: "fail",
       message: "Invalid ID",
     });
   }
-  singleData = Object.assign(singleData, req.body);
-  fs.writeFile("menu.json", JSON.stringify(jsonData), "utf-8", (err) => {
-    if (err) {
-      res.status(500).json({
-        status: "error",
-        message: "Internal Server Error",
-      });
-    } else {
-      res.status(200).json({
-        status: "success",
-        data: singleData,
-      });
-    }
-  });
-});
+};
 
-// delete data
-app.delete("/api/v2/menu/single/:id", (req, res) => {
-  const id = req.params.id * 1;
-  let singleData = jsonData.find((el) => el.id === id);
-  if (!singleData) {
-    return res.status(404).json({
-      status: "fail",
-      message: "Invalid ID",
-    });
+const updateMenuItem = (req, res) => {
+  let jsonData = JSON.parse(fs.readFileSync("menu.json", "utf-8"));
+  timeOfHit = req.requestTime;
+
+  const newItem = {
+    card: {
+      info: Object.assign({ id: String(Date.now()) }, req.body),
+    },
+  };
+  if (
+    jsonData.length > 0 &&
+    jsonData[0].card &&
+    jsonData[0].card.card &&
+    jsonData[0].card.card.itemCards
+  ) {
+    jsonData[0].card.card.itemCards.push(newItem);
+  } else {
+    jsonData.push(newItem);
   }
-  const index = jsonData.indexOf(singleData);
-  jsonData.splice(index, 1);
-  fs.writeFile("menu.json", JSON.stringify(jsonData), "utf-8", (err) => {
-    if (err) {
-      res.status(500).json({
-        status: "error",
-        message: "Internal Server Error",
-      });
-    } else {
-      res.status(204).json({
-        status: "success",
-        data: null,
-      });
-    }
-  });
-});
+};
+
+// Route Definitions
+// app.get("/api/v1/menu/", getMenu);
+// app.get("/api/v1/menu/single/:id", getSingleMenuItem);
+// app.put("/api/v1/menu/single/:id", putMenuItem);
+// app.delete("/api/v1/menu/single/:id", deleteMenuItem);
+// app.post("/api/v1/menu/single", updateMenuItem);
+const menuRouter = express.Router();
+
+menuRouter.route("/").get(getMenu);
+menuRouter
+  .route("/single/:id")
+  .get(getSingleMenuItem)
+  .put(putMenuItem)
+  .delete(deleteMenuItem);
+menuRouter.route("/single").post(updateMenuItem);
+
+app.use("/api/v1/menu", menuRouter);
+
+// The following code is commented out to illustrate the previous inline implementation
+// of the routes before refactoring to use controller functions.
+
+// app.get("/api/v1/menu/", (req, res) => {
+//   res.status(200).json({
+//     status: "success",
+//     length: jsonData.length,
+//     data: {
+//       jsonData,
+//     },
+//   });
+// });
+
+// app.get("/api/v1/menu/single/:id", (req, res) => {
+//   const id = req.params.id;
+//   let singleData = null;
+
+//   for (const section of jsonData) {
+//     if (section.card && section.card.card && section.card.card.itemCards) {
+//       const foundItem = section.card.card.itemCards.find(
+//         (item) => item.card.info.id === id
+//       );
+//       if (foundItem) {
+//         singleData = foundItem.card.info;
+//         break;
+//       }
+//     }
+//   }
+
+//   if (!singleData) {
+//     return res.status(404).json({
+//       status: "fail",
+//       message: "Invalid ID",
+//     });
+//   }
+
+//   res.status(200).json({
+//     status: "success",
+//     data: {
+//       singleData,
+//     },
+//   });
+// });
+
+// app.post("/api/v1/menu/single", (req, res) => {
+//   const newItem = {
+//     card: {
+//       info: Object.assign({ id: String(Date.now()) }, req.body),
+//     },
+//   };
+
+//   if (
+//     jsonData.length > 0 &&
+//     jsonData[0].card &&
+//     jsonData[0].card.card &&
+//     jsonData[0].card.card.itemCards
+//   ) {
+//     jsonData[0].card.card.itemCards.push(newItem);
+//   } else {
+//     jsonData.push(newItem);
+//   }
+
+//   fs.writeFile("menu.json", JSON.stringify(jsonData), "utf-8", (err) => {
+//     if (err) {
+//       return res.status(500).json({
+//         status: "error",
+//         message: "Internal Server Error",
+//       });
+//     }
+//     res.status(201).json({
+//       status: "success",
+//       data: newItem.card.info,
+//     });
+//   });
+// });
+
+// app.put("/api/v1/menu/single/:id", (req, res) => {
+//   const id = req.params.id;
+//   let foundItemInfo = null;
+
+//   for (const section of jsonData) {
+//     if (section.card && section.card.card && section.card.card.itemCards) {
+//       const item = section.card.card.itemCards.find(
+//         (i) => i.card.info.id === id
+//       );
+//       if (item) {
+//         Object.assign(item.card.info, req.body);
+//         foundItemInfo = item.card.info;
+//         break;
+//       }
+//     }
+//   }
+
+//   if (!foundItemInfo) {
+//     return res.status(404).json({
+//       status: "fail",
+//       message: "Invalid ID",
+//     });
+//   }
+
+//   fs.writeFile("menu.json", JSON.stringify(jsonData), "utf-8", (err) => {
+//     if (err) {
+//       return res.status(500).json({
+//         status: "error",
+//         message: "Internal Server Error",
+//       });
+//     }
+//     res.status(200).json({
+//       status: "success",
+//       data: foundItemInfo,
+//     });
+//   });
+// });
+
+// app.delete("/api/v1/menu/single/:id", (req, res) => {
+//   const id = req.params.id;
+//   let deleted = false;
+
+//   for (const section of jsonData) {
+//     if (section.card && section.card.card && section.card.card.itemCards) {
+//       const index = section.card.card.itemCards.findIndex(
+//         (item) => item.card.info.id === id
+//       );
+//       if (index !== -1) {
+//         section.card.card.itemCards.splice(index, 1);
+//         deleted = true;
+//         break;
+//       }
+//     }
+//   }
+
+//   if (!deleted) {
+//     return res.status(404).json({
+//       status: "fail",
+//       message: "Invalid ID",
+//     });
+//   }
+
+//   fs.writeFile("menu.json", JSON.stringify(jsonData), "utf-8", (err) => {
+//     if (err) {
+//       return res.status(500).json({
+//         status: "error",
+//         message: "Internal Server Error",
+//       });
+//     }
+//     res.status(204).json({
+//       status: "success",
+//       data: null,
+//     });
+//   });
+// });
 
 const PORT_NO = 9000;
 app.listen(PORT_NO, () => {
-  console.log("Server is running on port on http://localhost:" + PORT_NO);
+  console.log("Server is running on http://localhost:" + PORT_NO);
 });
 
 app.get("/", (req, res) => {
