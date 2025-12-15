@@ -1,0 +1,341 @@
+/* =========================================
+   1. CSS VARIABLES & THEME CONFIGURATION
+========================================= */
+:root {
+  /* Color Palette */
+  --color-bg-body: #f0f8ff;
+  --color-bg-card: #ffffff;
+  --color-text-main: #333333;
+  --color-text-muted: #666666;
+
+  /* Brand Colors */
+  --color-primary: #000080; /* Navy */
+  --color-accent-red: #ff4d4d;
+  --color-accent-purple: #800080;
+  --color-accent-blue: #0066cc;
+  --color-accent-green: rgb(0, 128, 0);
+  --color-accent-orange: #ffa500;
+
+  /* Spacing & Layout */
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 64px;
+
+  /* Borders & Shadows */
+  --border-radius-sm: 8px;
+  --border-radius-lg: 16px;
+  --shadow-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  /* Typography */
+  --font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 2.5rem;
+}
+
+/* =========================================
+   2. RESET & GLOBAL STYLES
+========================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-base);
+  background-color: var(--color-bg-body);
+  color: var(--color-text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-md);
+  background-image: radial-gradient(#e6efff 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* =========================================
+   3. LAYOUT CONTAINER
+========================================= */
+.container {
+  width: 100%;
+  max-width: 700px;
+  background: var(--color-bg-card);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-subtle);
+  animation: slideUpFade 0.8s ease-out forwards;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative top border */
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    var(--color-accent-blue),
+    var(--color-accent-purple)
+  );
+}
+
+/* =========================================
+   4. TYPOGRAPHY & HEADINGS
+========================================= */
+h1 {
+  color: var(--color-primary);
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+  letter-spacing: -1px;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: var(--color-accent-orange);
+  margin: var(--spacing-xs) auto 0;
+  border-radius: 2px;
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-lg);
+  transition: color 0.3s ease;
+}
+
+/* =========================================
+   5. COMPONENT: NAVIGATION LINK
+========================================= */
+.nav-link {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-sm);
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 128, 0.2);
+}
+
+/* =========================================
+   6. COMPONENT: COLOR CLASSES
+========================================= */
+.text-red {
+  color: var(--color-accent-red);
+  font-weight: 500;
+  border-left: 3px solid var(--color-accent-red);
+  padding-left: var(--spacing-sm);
+}
+
+.text-purple {
+  color: var(--color-accent-purple);
+  font-style: italic;
+  text-align: right;
+  border-right: 3px solid var(--color-accent-purple);
+  padding-right: var(--spacing-sm);
+}
+
+/* =========================================
+   7. COMPONENT: CARDS (THE DIVS)
+========================================= */
+.card {
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  border-radius: var(--border-radius-sm);
+  color: white;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Blue Card Variant */
+.card-blue {
+  background-color: var(--color-accent-blue);
+  background-image: linear-gradient(
+    135deg,
+    var(--color-accent-blue) 0%,
+    #4facfe 100%
+  );
+}
+
+/* Green Card Variant */
+.card-green {
+  background-color: var(--color-accent-green);
+  border: 2px solid var(--color-accent-orange);
+  /* Adding a subtle pattern */
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.1) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+}
+
+.card-green::after {
+  content: "RGB";
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 0.7rem;
+  opacity: 0.6;
+  border: 1px solid white;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* =========================================
+   8. ANIMATIONS
+========================================= */
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseBorder {
+  0% {
+    border-color: var(--color-accent-orange);
+  }
+  50% {
+    border-color: #ffd700;
+  }
+  100% {
+    border-color: var(--color-accent-orange);
+  }
+}
+
+.card-green:hover {
+  animation: pulseBorder 2s infinite;
+}
+
+/* =========================================
+   9. MEDIA QUERIES (RESPONSIVENESS)
+========================================= */
+
+/* Tablet Styles */
+@media (max-width: 768px) {
+  :root {
+    --spacing-xl: 32px;
+    --font-size-xl: 2rem;
+  }
+
+  .container {
+    padding: var(--spacing-md);
+  }
+
+  h1::after {
+    width: 40px;
+  }
+}
+
+/* Mobile Styles */
+@media (max-width: 480px) {
+  body {
+    padding: var(--spacing-xs);
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  .nav-link {
+    width: 100%;
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .text-purple {
+    text-align: left;
+    border-right: none;
+    border-left: 3px solid var(--color-accent-purple);
+    padding-left: var(--spacing-sm);
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg-body: #121212;
+    --color-bg-card: #1e1e1e;
+    --color-text-main: #e0e0e0;
+    --color-text-muted: #a0a0a0;
+    --shadow-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  }
+
+  body {
+    background-image: radial-gradient(#333 1px, transparent 1px);
+  }
+
+  .card-green {
+    border-color: #ff8c00;
+  }
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  .container {
+    box-shadow: none;
+    max-width: 100%;
+  }
+  .nav-link {
+    display: none;
+  }
+  .card {
+    border: 1px solid #ccc;
+    color: black;
+    background: none !important;
+  }
+}
