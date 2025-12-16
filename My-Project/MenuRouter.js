@@ -1,11 +1,17 @@
 const express = require("express");
-const menuRouter = require("./MenuRouter");
-const app = express();
-app.use(express.json());
-app.use("/menu", menuRouter);
+const menuController = require("./MenuController");
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});
+const menuRouter = express.Router();
 
-module.exports = app;
+menuRouter
+  .route("/")
+  .get(menuController.getMenu)
+  .post(menuController.createMenuItem);
+
+menuRouter
+  .route("/:id")
+  .get(menuController.getSingleMenuItem)
+  .put(menuController.putMenuItem)
+  .delete(menuController.deleteMenuItem);
+
+module.exports = menuRouter;

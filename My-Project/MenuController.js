@@ -1,93 +1,176 @@
-const fs = require("fs");
+const MenuItem = require("./MenuItem");
 
-const jsonData = JSON.parse(fs.readFileSync("menu.json", "utf-8"));
-console.log("MenuController loaded and menu.json parsed.");
+console.log("MenuController loaded with Database connection.");
 
-exports.getMenu = (req, res) => {
-  res.status(200).json({
-    status: "success",
-    length: jsonData.length,
-    msg: "Menu fetched successfully",
-    timeOfHit: req.requestTime,
-    data: {
-      jsonData,
-    },
-  });
-};
-
-exports.getSingleMenuItem = (req, res) => {
-  const id = req.params.id;
-  let singleData = null;
-  timeOfHit = req.requestTime;
-  for (const section of jsonData) {
-    if (section.card && section.card.card && section.card.card.itemCards) {
-      const foundItem = section.card.card.itemCards.find(
-        (item) => item.card.info.id === id
-      );
-      if (foundItem) {
-        singleData = foundItem.card.info;
-        break;
-      }
-    }
-  }
-  if (!singleData) {
-    return res.status(404).json({
-      status: "fail",
-      message: "Invalid ID",
+// Get all menu items
+exports.getMenu = async (req, res) => {
+  try {
+    const menuItems = await MenuItem.find();
+    res.status(200).json({
+      status: "success",
+      length: menuItems.length,
+      msg: "Menu fetched successfully",
+      timeOfHit: req.requestTime,
+      data: {
+        menuItems,
+      },
     });
-  }
-  res.status(200).json({
-    status: "success",
-    data: {
-      singleData,
-    },
-  });
-};
-
-exports.putMenuItem = (req, res) => {
-  const id = req.params.id;
-  let foundItemInfo = null;
-  timeOfHit = req.requestTime;
-  for (const section of jsonData) {
-    if (section.card && section.card.card && section.card.card.itemCards) {
-      const item = section.card.card.itemCards.find(
-        (i) => i.card.info.id === id
-      );
-      if (item) {
-        Object.assign(item.card.info, req.body);
-        foundItemInfo = item.card.info;
-        break;
-      }
-    }
-  }
-  if (!foundItemInfo) {
-    return res.status(404).json({
+  } catch (error) {
+    res.status(500).json({
       status: "fail",
-      message: "Invalid ID",
+      message: "Error fetching menu",
+      error: error.message,
     });
   }
 };
 
-exports.deleteMenuItem = (req, res) => {
-  const id = req.params.id;
-  let deleted = false;
-  timeOfHit = req.requestTime;
-  for (const section of jsonData) {
-    if (section.card && section.card.card && section.card.card.itemCards) {
-      const itemIndex = section.card.card.itemCards.findIndex(
-        (i) => i.card.info.id === id
-      );
-      if (itemIndex !== -1) {
-        section.card.card.itemCards.splice(itemIndex, 1);
-        deleted = true;
-        break;
-      }
+// Get single menu item
+exports.getSingleMenuItem = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const singleData = await MenuItem.findById(id);
+
+    if (!singleData) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Invalid ID or menu item not found",
+      });
     }
-  }
-  if (!deleted) {
-    return res.status(404).json({
+
+    res.status(200).json({
+      status: "success",
+      timeOfHit: req.requestTime,
+      data: {
+        singleData,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
       status: "fail",
-      message: "Invalid ID",
+      message: "Error fetching menu item",
+      error: error.message,
     });
   }
+};
+
+// Update menu item
+exports.putMenuItem = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const foundItemInfo = await MenuItem.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!foundItemInfo) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Invalid ID or menu item not found",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      timeOfHit: req.requestTime,
+      data: {
+        foundItemInfo,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      message: "Error updating menu item",
+      error: error.message,
+    });
+  }
+};
+
+// Delete menu item
+exports.deleteMenuItem = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedItem = await MenuItem.findByIdAndDelete(id);
+
+    if (!deletedItem) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Invalid ID or menu item not found",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      timeOfHit: req.requestTime,
+      message: "Menu item deleted successfully",
+      data: null,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      message: "Error deleting menu item",
+      error: error.message,
+    });
+  }
+};
+
+// Create new menu item
+exports.createMenuItem = async (req, res) => {
+  try {
+    const newItem = new MenuItem({
+      id: String(Date.now()),
+      ...req.body,
+    });
+
+    const savedItem = await newItem.save();
+
+    res.status(201).json({
+      status: "success",
+      timeOfHit: req.requestTime,
+      message: "Menu item created successfully",
+      data: {
+        savedItem,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      message: "Error creating menu item",
+      error: error.message,
+    });
+  }
+};
+
+exports.createMenuItem = async (req, res) => {
+  try {
+    const newItem = new MenuItem({
+      id: String(Date.now()),
+      ...req.body,
+    });
+
+    const savedItem = await newItem.save();
+
+    res.status(201).json({
+      status: "success",
+      timeOfHit: req.requestTime,
+      // Corrected variable name
+      message: "Menu item created successfully",
+      data: {
+        savedItem,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      message: "Error creating menu item",
+      error: error.message,
+    });
+  }
+};
+
+module.exports = {
+  getMenu,
+  getSingleMenuItem,
+  putMenuItem,
+  deleteMenuItem,
+  createMenuItem,
 };
