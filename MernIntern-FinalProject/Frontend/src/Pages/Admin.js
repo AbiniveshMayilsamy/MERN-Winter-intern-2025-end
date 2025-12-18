@@ -1,6 +1,7 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import SystemStatus from "./SystemStatus";
 import "../Styles/Admin.css";
 
 function Admin() {
@@ -110,6 +111,12 @@ function Admin() {
             onClick={() => setActiveTab("feedback")}
           >
             Feedback
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === "status" ? "active" : ""}`}
+            onClick={() => setActiveTab("status")}
+          >
+            System Status
           </button>
         </div>
 
@@ -242,6 +249,10 @@ function Admin() {
               View All Feedbacks
             </button>
           </div>
+        )}
+
+        {activeTab === "status" && (
+          <SystemStatus />
         )}
       </div>
     </div>

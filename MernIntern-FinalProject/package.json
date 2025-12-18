@@ -1,0 +1,14 @@
+{
+  "name": "quiz-portal",
+  "version": "1.0.0",
+  "description": "Quiz Portal MERN Application",
+  "scripts": {
+    "install-all": "npm install && cd Backend && npm install && cd ../Frontend && npm install",
+    "dev": "concurrently \"cd Backend && npm start\" \"cd Frontend && npm start\"",
+    "backend": "cd Backend && npm start",
+    "frontend": "cd Frontend && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
