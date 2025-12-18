@@ -1,0 +1,116 @@
+.leaderboard-container {
+  padding: 40px 20px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 25%, #4facfe 50%, #00f2fe 75%, #667eea 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  background-attachment: fixed;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.leaderboard-container h2 {
+  color: white;
+  font-size: 32px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.leaderboard-container label {
+  color: white;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.leaderboard-container select {
+  padding: 10px 16px;
+  border: 2px solid white;
+  border-radius: 8px;
+  color: #667eea;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.leaderboard-container select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.leaderboard-table {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border: 3px solid white;
+}
+
+.leaderboard-table thead {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.leaderboard-table thead tr th {
+  color: white;
+  padding: 16px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 14px;
+  border: none;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.leaderboard-table thead tr th:last-child {
+  border-right: none;
+}
+
+.leaderboard-table tbody tr {
+  border-bottom: 1px solid #e8f4f8;
+  transition: all 0.3s ease;
+}
+
+.leaderboard-table tbody tr:hover {
+  background-color: #f0f8ff;
+  box-shadow: inset 0 0 10px rgba(102, 126, 234, 0.05);
+}
+
+.leaderboard-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.leaderboard-table td {
+  padding: 14px 16px;
+  color: #666;
+  font-size: 14px;
+  border: none;
+}
+
+.leaderboard-table tbody tr:nth-child(1) td:first-child {
+  color: #f5576c;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.leaderboard-table tbody tr:nth-child(2) td:first-child {
+  color: #4facfe;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.leaderboard-table tbody tr:nth-child(3) td:first-child {
+  color: #667eea;
+  font-weight: 700;
+  font-size: 16px;
+}
